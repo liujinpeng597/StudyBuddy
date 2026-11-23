@@ -8,6 +8,25 @@ async function login(page: Page) {
   await expect(page).toHaveURL(/\/today$/);
 }
 
+test("login knowledge map follows the pointer", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Pointer interaction is desktop-only");
+  await page.goto("/login");
+  await expect(
+    page.getByRole("heading", { name: /把今天的笔记.*整理成明天还会用的知识/ })
+  ).toBeVisible();
+  const visual = page.locator(".login-visual");
+  const box = await visual.boundingBox();
+  if (!box) throw new Error("Login visual did not render");
+  await page.mouse.move(box.x + box.width * 0.45, box.y + box.height * 0.5);
+  await page.waitForTimeout(180);
+  const cursor = page.locator(".login-companion-cursor");
+  await expect(cursor).toBeVisible();
+  const before = await cursor.getAttribute("transform");
+  await page.mouse.move(box.x + box.width * 0.75, box.y + box.height * 0.28);
+  await page.waitForTimeout(180);
+  await expect(cursor).not.toHaveAttribute("transform", before ?? "");
+});
+
 test("opens the workbench on all viewports", async ({ page }, testInfo) => {
   await login(page);
   await expect(page.getByRole("heading", { name: /今日整合/ })).toBeVisible();
