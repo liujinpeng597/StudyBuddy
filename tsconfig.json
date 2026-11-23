@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["apps/web/src/*"],
+      "@studybuddy/core": ["packages/core/src/index.ts"],
+      "@studybuddy/db": ["packages/db/src/index.ts"],
+      "@studybuddy/ai": ["packages/ai/src/index.ts"],
+      "@studybuddy/storage": ["packages/storage/src/index.ts"],
+      "@studybuddy/test-fixtures": ["packages/test-fixtures/src/index.ts"]
+    },
+    "types": ["node"]
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "packages/**/*.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "vitest.config.ts",
+    "vitest.integration.config.ts",
+    "playwright.config.ts"
+  ],
+  "exclude": ["node_modules", ".next", "dist", "test-results", "playwright-report"]
+}

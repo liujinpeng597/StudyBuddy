@@ -1,0 +1,18 @@
+{
+  "name": "@studybuddy/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "pnpm clean && tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@studybuddy/ai": "workspace:*",
+    "@studybuddy/core": "workspace:*",
+    "@studybuddy/db": "workspace:*",
+    "@studybuddy/storage": "workspace:*"
+  }
+}
